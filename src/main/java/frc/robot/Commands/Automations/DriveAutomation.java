@@ -1,15 +1,21 @@
 
 package frc.robot.Commands.Automations;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystem.DriveTrain.DriveTrain;
-import frc.robot.Subsystem.DriveTrain.DriveTrainConstans;
 
 public class DriveAutomation extends Command {
-  private static final DriveTrain driveTrain = DriveTrain.getInstance();
+  private static final DriveTrain drive = DriveTrain.getInstance();
 
-  public DriveAutomation() {
-    addRequirements(driveTrain);
+  private Supplier<Double> leftSupplier;
+  private Supplier<Double> rightSupplier;
+
+  public DriveAutomation(Supplier<Double> left , Supplier<Double> right) {
+    addRequirements(drive);
+    leftSupplier = left;
+    rightSupplier = right;
   }
 
   @Override
@@ -17,16 +23,15 @@ public class DriveAutomation extends Command {
 
   @Override
   public void execute() {
-    driveTrain.setVoltage(DriveTrainConstans.DRIVETRAIN_MOTOR_1_VOLT);
-    driveTrain.setVoltage(DriveTrainConstans.DRIVETRAIN_MOTOR_2_VOLT );
-    driveTrain.setVoltage(DriveTrainConstans.DRIVETRAIN_MOTOR_3_VOLT );
-    driveTrain.setVoltage(DriveTrainConstans.DRIVETRAIN_MOTOR_4_VOLT );
+    drive.setVoltageLeft(leftSupplier.get());
+    drive.setVoltageRight(rightSupplier.get());
   }
 
   @Override
   public void end(boolean interrupted) {
-    driveTrain.setVoltage(0);
-  }
+    drive.setVoltageLeft(0);
+    drive.setVoltageRight(0);
+}
 
   @Override
   public boolean isFinished() {

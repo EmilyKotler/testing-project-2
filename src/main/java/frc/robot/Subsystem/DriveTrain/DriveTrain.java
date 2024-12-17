@@ -29,6 +29,18 @@ public class DriveTrain extends SubsystemBase {
     motor4.setVoltage(volt);
   }
 
+  public void setVoltageRight(double volt) {
+    motor1.setVoltage(volt);
+    motor2.setVoltage(volt);
+
+  }
+
+  public void setVoltageLeft(double volt) {
+    motor3.setVoltage(volt);
+    motor4.setVoltage(volt);
+
+  }
+
   public static DriveTrain getInstance(){
     if (driveTrain == null){
       driveTrain = new DriveTrain();
